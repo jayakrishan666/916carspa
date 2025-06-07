@@ -1,109 +1,90 @@
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Auto Service Bill</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-  />
-</head>
-<body class="bg-white">
-  <div class="max-w-4xl mx-auto p-6">
+{% extends 'service_app/base.html' %}
+{% load static %}
+
+{% block title %}Auto Service Bill{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto p-6">
     <div class="flex flex-wrap gap-2 mb-4">
-      <button
-        type="button"
-        class="flex items-center gap-2 border border-gray-300 rounded px-4 py-2 text-gray-700 text-sm hover:bg-gray-50"
-      >
-        <i class="fas fa-arrow-left"></i>
-        Back to Edit
-      </button>
-      <button
-        type="button"
-        class="flex items-center gap-2 bg-gray-900 text-white text-sm font-semibold rounded px-4 py-2 hover:bg-gray-800"
-      >
-        <i class="fas fa-print"></i>
-        Print Bill
-      </button>
-      <button
-        type="button"
-        class="bg-gray-900 text-white text-sm font-semibold rounded px-4 py-2 hover:bg-gray-800"
-      >
-        Save Bill
-      </button>
+        <button type="button" class="flex items-center gap-2 border border-gray-300 rounded px-4 py-2 text-gray-700 text-sm hover:bg-gray-50">
+            <i class="fas fa-arrow-left"></i>
+            Back to Edit
+        </button>
+        <button type="button" class="flex items-center gap-2 bg-gray-900 text-white text-sm font-semibold rounded px-4 py-2 hover:bg-gray-800">
+            <i class="fas fa-print"></i>
+            Print Bill
+        </button>
+        <button type="button" class="bg-gray-900 text-white text-sm font-semibold rounded px-4 py-2 hover:bg-gray-800">
+            Save Bill
+        </button>
     </div>
 
-    <div
-      class="border border-gray-200 rounded-lg p-6 max-w-4xl w-full mx-auto"
-    >
-      <header class="text-center mb-4">
-        <h1 class="text-2xl font-extrabold text-gray-900">AUTO SERVICE CENTER</h1>
-        <p class="text-sm text-gray-600 mt-1">
-          Vellilapilly, Ramapuram
-        </p>
-        <p class="text-xs text-gray-500 mt-1">
-          Phone: +91 9847347290
-        </p>
-        <hr class="border-gray-300 mt-4" />
-      </header>
+    <div class="border border-gray-200 rounded-lg p-6 max-w-4xl w-full mx-auto">
+        <header class="text-center mb-4">
+            <h1 class="text-2xl font-extrabold text-gray-900">AUTO SERVICE CENTER</h1>
+            <p class="text-sm text-gray-600 mt-1">Vellilapilly, Ramapuram</p>
+            <p class="text-xs text-gray-500 mt-1">Phone: +91 9847347290</p>
+            <hr class="border-gray-300 mt-4" />
+        </header>
 
-      <section class="flex justify-between text-gray-800 mb-4 text-sm">
-        <div>
-          <p class="font-semibold">SERVICE BILL</p>
-          <!-- <p>Bill No: BILL-1749227498365</p> -->
+        <section class="flex justify-between text-gray-800 mb-4 text-sm">
+            <div>
+                <p class="font-semibold">SERVICE BILL</p>
+                <!-- <p>Bill No: BILL-1749227498365</p> -->
+            </div>
+            <div>Date: 6/6/2025</div>
+        </section>
+
+        <section class="bg-gray-50 p-4 rounded mb-6 grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-800">
+            <div>
+                <p class="font-semibold">Customer Details:</p>
+                <p><span class="font-bold">Name:</span> jayakrs</p>
+                <p><span class="font-bold">Phone:</span> 57875</p>
+            </div>
+            <div>
+                <p>&nbsp;</p>
+                <p><span class="font-bold">Vehicle:</span> GFHFHF</p>
+                <p><span class="font-bold">Model:</span> dfgfsg</p>
+            </div>
+        </section>
+
+        <table class="w-full border border-gray-300 text-sm text-gray-800 mb-6">
+            <thead class="bg-gray-100 border-b border-gray-300">
+                <tr>
+                    <th class="border-r border-gray-300 font-semibold px-3 py-2 text-left w-16">S.No</th>
+                    <th class="border-r border-gray-300 font-semibold px-3 py-2 text-left">Part/Service</th>
+                    <th class="border-r border-gray-300 font-semibold px-3 py-2 text-center w-16">Qty</th>
+                    <th class="border-r border-gray-300 font-semibold px-3 py-2 text-center w-24">Rate (₹)</th>
+                    <th class="font-semibold px-3 py-2 text-center w-28">Amount (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-t border-gray-300">
+                    <td class="border-r border-gray-300 px-3 py-2">1</td>
+                    <td class="border-r border-gray-300 px-3 py-2">dg</td>
+                    <td class="border-r border-gray-300 px-3 py-2 text-center">1</td>
+                    <td class="border-r border-gray-300 px-3 py-2 text-center">10.00</td>
+                    <td class="px-3 py-2 text-center font-semibold">10.00</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="flex justify-end mb-6">
+            <div class="bg-gray-50 px-4 py-2 font-semibold text-gray-900 border border-gray-300 rounded">
+                Total Amount: <span class="ml-2">₹10.00</span>
+            </div>
         </div>
-        <div>Date: 6/6/2025</div>
-      </section>
 
-      <section
-        class="bg-gray-50 p-4 rounded mb-6 grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-800"
-      >
-        <div>
-          <p class="font-semibold">Customer Details:</p>
-          <p><span class="font-bold">Name:</span> jayakrs</p>
-          <p><span class="font-bold">Phone:</span> 57875</p>
-        </div>
-        <div>
-          <p>&nbsp;</p>
-          <p><span class="font-bold">Vehicle:</span> GFHFHF</p>
-          <p><span class="font-bold">Model:</span> dfgfsg</p>
-        </div>
-      </section>
-
-      <table class="w-full border border-gray-300 text-sm text-gray-800 mb-6">
-        <thead class="bg-gray-100 border-b border-gray-300">
-          <tr>
-            <th class="border-r border-gray-300 font-semibold px-3 py-2 text-left w-16">S.No</th>
-            <th class="border-r border-gray-300 font-semibold px-3 py-2 text-left">Part/Service</th>
-            <th class="border-r border-gray-300 font-semibold px-3 py-2 text-center w-16">Qty</th>
-            <th class="border-r border-gray-300 font-semibold px-3 py-2 text-center w-24">Rate (₹)</th>
-            <th class="font-semibold px-3 py-2 text-center w-28">Amount (₹)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-t border-gray-300">
-            <td class="border-r border-gray-300 px-3 py-2">1</td>
-            <td class="border-r border-gray-300 px-3 py-2">dg</td>
-            <td class="border-r border-gray-300 px-3 py-2 text-center">1</td>
-            <td class="border-r border-gray-300 px-3 py-2 text-center">10.00</td>
-            <td class="px-3 py-2 text-center font-semibold">10.00</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="flex justify-end mb-6">
-        <div class="bg-gray-50 px-4 py-2 font-semibold text-gray-900 border border-gray-300 rounded">
-          Total Amount: <span class="ml-2">₹10.00</span>
-        </div>
-      </div>
-
-      <hr class="border-gray-300" />
-      <footer class="text-center text-xs text-gray-500 mt-4">
-        <p>Thank you for choosing our service!</p>
-        <!-- <p>For any queries, contact us at the above details.</p> -->
-      </footer>
+        <hr class="border-gray-300" />
+        <footer class="text-center text-xs text-gray-500 mt-4">
+            <p>Thank you for choosing our service!</p>
+            <!-- <p>For any queries, contact us at the above details.</p> -->
+        </footer>
     </div>
-  </div>
-</body>
-</html>
+</div>
+{% endblock %}

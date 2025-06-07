@@ -1,67 +1,60 @@
+{% extends 'service_app/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>916 CAR CLINIC</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-</head>
-<body class="bg-gray-100">
-    <div class="min-h-screen">
-        <!-- Header -->
-        <header class="bg-white shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                <img src="{% static 'service_app/logo.png' %}" alt="916 CAR CLINIC Logo" class="h-12 mx-auto">
-            </div>
-        </header>
 
-        <!-- Main Content -->
-        <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-            <!-- Menu Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Create New Service -->
-                <div class="bg-white overflow-hidden shadow rounded-lg">
-                    <div class="p-6">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0 bg-indigo-500 rounded-md p-3">
-                                <i class="fas fa-plus text-white text-2xl"></i>
-                            </div>
-                            <div class="ml-5">
-                                <h3 class="text-lg font-medium text-gray-900">Create New Service</h3>
-                                <p class="mt-1 text-sm text-gray-500">Add a new customer service record</p>
-                            </div>
+{% block title %}916 CAR CLINIC{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <!-- Menu Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Create New Service -->
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 bg-indigo-500 rounded-md p-3">
+                            <i class="fas fa-plus text-white text-2xl"></i>
                         </div>
-                        <div class="mt-6">
-                            <a href="{% url 'service_form' %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Create Service
-                            </a>
+                        <div class="ml-5">
+                            <h3 class="text-lg font-medium text-gray-900">Create New Service</h3>
+                            <p class="mt-1 text-sm text-gray-500">Add a new customer service record</p>
                         </div>
                     </div>
-                </div>
-
-                <!-- View All Services -->
-                <div class="bg-white overflow-hidden shadow rounded-lg">
-                    <div class="p-6">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0 bg-green-500 rounded-md p-3">
-                                <i class="fas fa-list text-white text-2xl"></i>
-                            </div>
-                            <div class="ml-5">
-                                <h3 class="text-lg font-medium text-gray-900">View All Services</h3>
-                                <p class="mt-1 text-sm text-gray-500">View and manage all service records</p>
-                            </div>
-                        </div>
-                        <div class="mt-6">
-                            <a href="{% url 'service_list' %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                                View Services
-                            </a>
-                        </div>
+                    <div class="mt-6">
+                        <a href="{% url 'create_service' %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Create Service
+                        </a>
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
-</body>
-</html> 
+
+            <!-- View All Services -->
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-6">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 bg-green-500 rounded-md p-3">
+                            <i class="fas fa-list text-white text-2xl"></i>
+                        </div>
+                        <div class="ml-5">
+                            <h3 class="text-lg font-medium text-gray-900">View All Services</h3>
+                            <p class="mt-1 text-sm text-gray-500">View and manage all service records</p>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <a href="{% url 'service_list' %}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            View Services
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %} 

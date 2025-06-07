@@ -1,97 +1,93 @@
+{% extends 'service_app/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto Service Bill</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        @media print {
-            .no-print {
-                display: none;
-            }
+
+{% block title %}916 CAR SPA Bill{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+    @media print {
+        .no-print {
+            display: none;
         }
-    </style>
-</head>
-<body class="bg-white">
-    <div class="max-w-4xl mx-auto p-6">
-        <div class="flex flex-wrap gap-2 mb-4 no-print">
-            <a href="{% url 'service_list' %}" class="flex items-center gap-2 border border-gray-300 rounded px-4 py-2 text-gray-700 text-sm hover:bg-gray-50">
-                <i class="fas fa-arrow-left"></i>
-                Back to List
-            </a>
-            <button onclick="window.print()" class="flex items-center gap-2 bg-gray-900 text-white text-sm font-semibold rounded px-4 py-2 hover:bg-gray-800">
-                <i class="fas fa-print"></i>
-                Print Bill
-            </button>
-        </div>
+    }
+</style>
+{% endblock %}
 
-        <div class="border border-gray-200 rounded-lg p-6 max-w-4xl w-full mx-auto">
-            <header class="text-center mb-4">
-                <img src="{% static 'service_app/logo.png' %}" alt="916 CAR CLINIC Logo" class="h-12 mx-auto mb-2">
-                <p class="text-sm text-gray-600 mt-1">Vellilapilly, Ramapuram</p>
-                <p class="text-xs text-gray-500 mt-1">Phone: +91 9847347290 </p>
-                <hr class="border-gray-300 mt-4">
-            </header>
-
-            <section class="flex justify-between text-gray-800 mb-4 text-sm">
-                <div>
-                    <p class="font-semibold">SERVICE BILL</p>
-                    <!-- <p>Bill No: BILL-{{ customer.id }}</p> -->
-                </div>
-                <div>Date: {{ customer.created_at|date:"d/m/Y" }}</div>
-            </section>
-
-            <section class="bg-gray-50 p-4 rounded mb-6 grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-800">
-                <div>
-                    <p class="font-semibold">Customer Details:</p>
-                    <p><span class="font-bold">Name:</span> {{ customer.name }}</p>
-                    <p><span class="font-bold">Phone:</span> {{ customer.phone_number }}</p>
-                </div>
-                <div>
-                    <p>&nbsp;</p>
-                    <p><span class="font-bold">Vehicle:</span> {{ customer.vehicle_number }}</p>
-                    <p><span class="font-bold">Model:</span> {{ customer.vehicle_model }}</p>
-                </div>
-            </section>
-
-            <table class="w-full border border-gray-300 text-sm text-gray-800 mb-6">
-                <thead class="bg-gray-100 border-b border-gray-300">
-                    <tr>
-                        <th class="border-r border-gray-300 font-semibold px-3 py-2 text-left w-16">S.No</th>
-                        <th class="border-r border-gray-300 font-semibold px-3 py-2 text-left">Part/Service</th>
-                        <th class="border-r border-gray-300 font-semibold px-3 py-2 text-center w-16">Qty</th>
-                        <th class="border-r border-gray-300 font-semibold px-3 py-2 text-center w-24">Rate (₹)</th>
-                        <th class="font-semibold px-3 py-2 text-center w-28">Amount (₹)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for part in customer.service_parts.all %}
-                    <tr class="border-t border-gray-300">
-                        <td class="border-r border-gray-300 px-3 py-2">{{ forloop.counter }}</td>
-                        <td class="border-r border-gray-300 px-3 py-2">{{ part.part_name }}</td>
-                        <td class="border-r border-gray-300 px-3 py-2 text-center">{{ part.quantity }}</td>
-                        <td class="border-r border-gray-300 px-3 py-2 text-center">{{ part.price }}</td>
-                        <td class="px-3 py-2 text-center font-semibold">{{ part.total_price }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-
-            <div class="flex justify-end mb-6">
-                <div class="bg-gray-50 px-4 py-2 font-semibold text-gray-900 border border-gray-300 rounded">
-                    Total Amount: <span class="ml-2">₹{{ total_amount }}</span>
-                </div>
-            </div>
-
-            <hr class="border-gray-300">
-            <footer class="text-center text-xs text-gray-500 mt-4">
-                <p>Thank you for choosing our service!</p>
-                <!-- <p>For any queries, contact us at the above details.</p> -->
-            </footer>
-        </div>
+{% block content %}
+<div class="max-w-4xl mx-auto p-6">
+    <div class="flex flex-wrap gap-2 mb-4 no-print">
+        <a href="{% url 'service_list' %}" class="flex items-center gap-2 border border-gray-300 rounded px-4 py-2 text-gray-700 text-sm hover:bg-gray-50">
+            <i class="fas fa-arrow-left"></i>
+            Back to List
+        </a>
+        <button onclick="window.print()" class="flex items-center gap-2 bg-gray-900 text-white text-sm font-semibold rounded px-4 py-2 hover:bg-gray-800">
+            <i class="fas fa-print"></i>
+            Print Bill
+        </button>
     </div>
-</body>
-</html> 
+
+    <div class="border border-gray-200 rounded-lg p-6 max-w-4xl w-full mx-auto">
+        <header class="text-center mb-4">
+            <img src="{% static 'service_app/logo.png' %}" alt="916 CAR CLINIC Logo" class="h-12 mx-auto mb-2">
+            <p class="text-sm text-gray-600 mt-1">Vellilapilly, Ramapuram</p>
+            <p class="text-xs text-gray-500 mt-1">Phone: +91 9847347290 </p>
+            <hr class="border-gray-300 mt-4">
+        </header>
+
+        <section class="flex justify-between text-gray-800 mb-4 text-sm">
+            <div>
+                <p class="font-semibold">SERVICE BILL</p>
+            </div>
+            <div>Date: {{ customer.created_at|date:"d/m/Y" }}</div>
+        </section>
+
+        <section class="bg-gray-50 p-4 rounded mb-6 grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-800">
+            <div>
+                <p class="font-semibold">Customer Details:</p>
+                <p><span class="font-bold">Name:</span> {{ customer.name }}</p>
+                <p><span class="font-bold">Phone:</span> {{ customer.phone_number }}</p>
+            </div>
+            <div>
+                <p>&nbsp;</p>
+                <p><span class="font-bold">Vehicle:</span> {{ customer.vehicle_number }}</p>
+                <p><span class="font-bold">Model:</span> {{ customer.vehicle_model }}</p>
+            </div>
+        </section>
+
+        <table class="w-full border border-gray-300 text-sm text-gray-800 mb-6">
+            <thead class="bg-gray-100 border-b border-gray-300">
+                <tr>
+                    <th class="border-r border-gray-300 font-semibold px-3 py-2 text-left w-16">S.No</th>
+                    <th class="border-r border-gray-300 font-semibold px-3 py-2 text-left">Part/Service</th>
+                    <th class="border-r border-gray-300 font-semibold px-3 py-2 text-center w-24">Rate (₹)</th>
+                    <th class="font-semibold px-3 py-2 text-center w-28">Amount (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for part in customer.service_parts.all %}
+                <tr class="border-t border-gray-300">
+                    <td class="border-r border-gray-300 px-3 py-2">{{ forloop.counter }}</td>
+                    <td class="border-r border-gray-300 px-3 py-2">{{ part.part_name }}</td>
+                    <td class="border-r border-gray-300 px-3 py-2 text-center">{{ part.quantity }}</td>
+                    <td class="border-r border-gray-300 px-3 py-2 text-center">{{ part.price }}</td>
+                    <!-- <td class="px-3 py-2 text-center font-semibold">{{ part.total_price }}</td> -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="flex justify-end mb-6">
+            <div class="bg-gray-50 px-4 py-2 font-semibold text-gray-900 border border-gray-300 rounded">
+                Total Amount: <span class="ml-2">₹{{ total_amount }}</span>
+            </div>
+        </div>
+
+        <hr class="border-gray-300">
+        <footer class="text-center text-xs text-gray-500 mt-4">
+            <p>Thank you for choosing our service!</p>
+        </footer>
+    </div>
+</div>
+{% endblock %} 
