@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        @media (max-width: 640px) {
+            .mobile-stack {
+                flex-direction: column;
+            }
+            .mobile-full {
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+            .mobile-text-center {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+                    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900">Service Records</h1>
+                    <a href="{% url 'main_menu' %}" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                        <i class="fas fa-home mr-2"></i>
+                        Main Menu
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <!-- Service List -->
+            <div class="bg-white shadow overflow-hidden sm:rounded-md">
+                <ul class="divide-y divide-gray-200">
+                    {% for customer in customers %}
+                    <li>
+                        <div class="px-4 py-4 sm:px-6">
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+                                <div class="flex-1 min-w-0">
+                                    <h3 class="text-lg font-medium text-indigo-600 truncate">
+                                        {{ customer.name }}
+                                    </h3>
+                                    <div class="mt-2 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-6">
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-car mr-1.5"></i>
+                                            {{ customer.vehicle_model }} ({{ customer.vehicle_number }})
+                                        </div>
+                                        <div class="flex items-center text-sm text-gray-500">
+                                            <i class="fas fa-phone mr-1.5"></i>
+                                            {{ customer.phone_number }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                                    <a href="{% url 'view_bill' customer.id %}" class="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
+                                        <i class="fas fa-file-invoice mr-1.5"></i>
+                                        View Bill
+                                    </a>
+                                    <a href="{% url 'print_bill' customer.id %}" class="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                                        <i class="fas fa-print mr-1.5"></i>
+                                        Print Bill
+                                    </a>
+                                    <a href="{% url 'edit_service' customer.id %}" class="w-full sm:w-auto inline-flex items-center justify-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700">
+                                        <i class="fas fa-edit mr-1.5"></i>
+                                        Edit Bill
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {% empty %}
+                    <li class="px-4 py-4 sm:px-6 text-center text-gray-500">
+                        No service records found.
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </main>
+    </div>
+</body>
+</html> 

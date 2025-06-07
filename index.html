@@ -1,0 +1,291 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Customer Parts & Services</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+</head>
+<body class="bg-white font-sans">
+  <div class="max-w-5xl mx-auto p-6">
+    <button
+      type="button"
+      class="inline-flex items-center gap-2 rounded border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      onclick="window.history.back()"
+    >
+      <i class="fas fa-arrow-left"></i>
+      Back
+    </button>
+
+    <div class="mt-6 flex flex-col md:flex-row gap-6">
+      <section
+        aria-labelledby="customer-info-title"
+        class="flex-1 rounded-lg border border-gray-200 p-6"
+      >
+        <h2
+          id="customer-info-title"
+          class="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900"
+        >
+          <i class="fas fa-user"></i>
+          Customer Information
+        </h2>
+        <form id="customerForm" class="space-y-4 text-xs text-gray-700">
+          <div>
+            <label for="customer-name" class="block font-semibold mb-1"
+              >Customer Name <span class="text-red-600">*</span></label
+            >
+            <input
+              type="text"
+              id="customer-name"
+              name="customer-name"
+              placeholder="Enter customer name"
+              required
+              class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-xs placeholder:text-gray-400 focus:border-indigo-500 focus:ring-indigo-500"
+            />
+          </div>
+          <div>
+            <label for="phone-number" class="block font-semibold mb-1"
+              >Phone Number</label
+            >
+            <input
+              type="tel"
+              id="phone-number"
+              name="phone-number"
+              placeholder="Enter phone number"
+              class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-xs placeholder:text-gray-400 focus:border-indigo-500 focus:ring-indigo-500"
+            />
+          </div>
+          <div>
+            <label for="vehicle-number" class="block font-semibold mb-1"
+              >Vehicle Number <span class="text-red-600">*</span></label
+            >
+            <input
+              type="text"
+              id="vehicle-number"
+              name="vehicle-number"
+              placeholder="e.g., KA01AB1234"
+              required
+              class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-xs placeholder:text-gray-400 focus:border-indigo-500 focus:ring-indigo-500"
+            />
+          </div>
+          <div>
+            <label for="vehicle-model" class="block font-semibold mb-1"
+              >Vehicle Model</label
+            >
+            <input
+              type="text"
+              id="vehicle-model"
+              name="vehicle-model"
+              placeholder="e.g., Honda City, Maruti Swift"
+              class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-xs placeholder:text-gray-400 focus:border-indigo-500 focus:ring-indigo-500"
+            />
+          </div>
+        </form>
+      </section>
+
+      <section
+        aria-labelledby="parts-services-title"
+        class="flex-1 rounded-lg border border-gray-200 p-6"
+      >
+        <h2
+          id="parts-services-title"
+          class="mb-4 flex items-center gap-2 text-lg font-semibold text-gray-900"
+        >
+          <i class="fas fa-cog"></i>
+          Parts & Services
+        </h2>
+        <form id="partsForm" class="space-y-4 text-xs text-gray-700">
+          <div id="partsContainer">
+            <fieldset class="space-y-3 border border-gray-200 rounded p-4">
+              <legend class="font-semibold text-gray-900">Part 1</legend>
+              <div>
+                <label for="part-name-1" class="block mb-1 font-semibold"
+                  >Part/Service Name</label
+                >
+                <input
+                  type="text"
+                  id="part-name-1"
+                  name="part-name-1"
+                  placeholder="e.g., Engine Oil, Brake Pad"
+                  required
+                  class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-xs placeholder:text-gray-400 focus:border-indigo-500 focus:ring-indigo-500"
+                />
+              </div>
+              <div class="flex gap-4">
+                <div class="flex-1">
+                  <label for="quantity-1" class="block mb-1 font-semibold"
+                    >Quantity</label
+                  >
+                  <input
+                    type="number"
+                    id="quantity-1"
+                    name="quantity-1"
+                    min="1"
+                    value="1"
+                    required
+                    class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-xs placeholder:text-gray-400 focus:border-indigo-500 focus:ring-indigo-500"
+                  />
+                </div>
+                <div class="flex-1">
+                  <label for="price-1" class="block mb-1 font-semibold"
+                    >Price (₹)</label
+                  >
+                  <input
+                    type="number"
+                    id="price-1"
+                    name="price-1"
+                    min="0"
+                    value="0"
+                    required
+                    class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-xs placeholder:text-gray-400 focus:border-indigo-500 focus:ring-indigo-500"
+                  />
+                </div>
+              </div>
+            </fieldset>
+          </div>
+          <button
+            type="button"
+            onclick="addPartField()"
+            class="flex w-full items-center justify-center gap-2 rounded border border-gray-300 bg-white px-4 py-2 text-xs font-semibold text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+            <i class="fas fa-plus"></i>
+            Add Another Part
+          </button>
+        </form>
+      </section>
+    </div>
+
+    <div class="mt-6 flex justify-between items-center">
+      <div
+        class="rounded-lg border border-gray-200 bg-white p-4 text-right text-base font-extrabold text-gray-900"
+      >
+        Total: ₹<span id="totalAmount">0.00</span>
+      </div>
+      <button
+        type="button"
+        onclick="submitForm()"
+        class="rounded bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+
+  <script>
+    let partCount = 1;
+
+    function addPartField() {
+      partCount++;
+      const container = document.getElementById('partsContainer');
+      const newPart = document.createElement('fieldset');
+      newPart.className = 'space-y-3 border border-gray-200 rounded p-4 mt-4';
+      newPart.innerHTML = `
+        <legend class="font-semibold text-gray-900">Part ${partCount}</legend>
+        <div>
+          <label for="part-name-${partCount}" class="block mb-1 font-semibold">Part/Service Name</label>
+          <input
+            type="text"
+            id="part-name-${partCount}"
+            name="part-name-${partCount}"
+            placeholder="e.g., Engine Oil, Brake Pad"
+            required
+            class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-xs placeholder:text-gray-400 focus:border-indigo-500 focus:ring-indigo-500"
+          />
+        </div>
+        <div class="flex gap-4">
+          <div class="flex-1">
+            <label for="quantity-${partCount}" class="block mb-1 font-semibold">Quantity</label>
+            <input
+              type="number"
+              id="quantity-${partCount}"
+              name="quantity-${partCount}"
+              min="1"
+              value="1"
+              required
+              class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-xs placeholder:text-gray-400 focus:border-indigo-500 focus:ring-indigo-500"
+            />
+          </div>
+          <div class="flex-1">
+            <label for="price-${partCount}" class="block mb-1 font-semibold">Price (₹)</label>
+            <input
+              type="number"
+              id="price-${partCount}"
+              name="price-${partCount}"
+              min="0"
+              value="0"
+              required
+              class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-xs placeholder:text-gray-400 focus:border-indigo-500 focus:ring-indigo-500"
+            />
+          </div>
+        </div>
+      `;
+      container.appendChild(newPart);
+    }
+
+    function calculateTotal() {
+      let total = 0;
+      for (let i = 1; i <= partCount; i++) {
+        const quantity = parseFloat(document.getElementById(`quantity-${i}`).value) || 0;
+        const price = parseFloat(document.getElementById(`price-${i}`).value) || 0;
+        total += quantity * price;
+      }
+      document.getElementById('totalAmount').textContent = total.toFixed(2);
+    }
+
+    // Add event listeners to all quantity and price inputs
+    document.addEventListener('input', function(e) {
+      if (e.target.id.startsWith('quantity-') || e.target.id.startsWith('price-')) {
+        calculateTotal();
+      }
+    });
+
+    async function submitForm() {
+      const customerData = {
+        name: document.getElementById('customer-name').value,
+        phone_number: document.getElementById('phone-number').value,
+        vehicle_number: document.getElementById('vehicle-number').value,
+        vehicle_model: document.getElementById('vehicle-model').value
+      };
+
+      const parts = [];
+      for (let i = 1; i <= partCount; i++) {
+        parts.push({
+          part_name: document.getElementById(`part-name-${i}`).value,
+          quantity: parseInt(document.getElementById(`quantity-${i}`).value),
+          price: parseFloat(document.getElementById(`price-${i}`).value)
+        });
+      }
+
+      const formData = {
+        customer: customerData,
+        parts: parts
+      };
+
+      try {
+        const response = await fetch('/api/services/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+          alert('Service record created successfully!');
+          // Optionally redirect to view the created record
+          window.location.href = `/api/services/${data.customer_id}/`;
+        } else {
+          alert('Error: ' + data.message);
+        }
+      } catch (error) {
+        alert('Error submitting form: ' + error.message);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Service Bill</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .part-item input[type="number"]::-webkit-outer-spin-button,
+        .part-item input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .part-item input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        @media (max-width: 640px) {
+            .mobile-stack {
+                flex-direction: column;
+            }
+            .mobile-full {
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+            .mobile-text-center {
+                text-align: center;
+            }
+            .mobile-padding {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen py-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-8">
+                <img src="{% static 'service_app/logo.png' %}" alt="916 CAR CLINIC Logo" class="h-16 mx-auto mb-4">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900">Edit Service Bill</h2>
+            </div>
+
+            <div class="bg-white py-6 px-4 shadow sm:rounded-lg sm:px-6">
+                <form id="edit-service-form" class="space-y-6">
+                    <!-- Customer Information -->
+                    <div>
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Customer Information</h3>
+                        <input type="hidden" id="customer-id" value="{{ customer.id }}">
+                        <div class="grid grid-cols-1 gap-y-4 gap-x-4 sm:grid-cols-2">
+                            <div>
+                                <label for="customer-name" class="block text-sm font-medium text-gray-700">Customer Name</label>
+                                <div class="mt-1">
+                                    <input type="text" name="customer-name" id="customer-name" value="{{ customer.name }}" autocomplete="name" required class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="phone-number" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                                <div class="mt-1">
+                                    <input type="text" name="phone-number" id="phone-number" value="{{ customer.phone_number }}" autocomplete="tel" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="vehicle-number" class="block text-sm font-medium text-gray-700">Vehicle Number</label>
+                                <div class="mt-1">
+                                    <input type="text" name="vehicle-number" id="vehicle-number" value="{{ customer.vehicle_number }}" required class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="vehicle-model" class="block text-sm font-medium text-gray-700">Vehicle Model</label>
+                                <div class="mt-1">
+                                    <input type="text" name="vehicle-model" id="vehicle-model" value="{{ customer.vehicle_model }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Parts and Services -->
+                    <div>
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Parts and Services</h3>
+                        <div id="parts-container" class="space-y-4">
+                            {% for part in parts %}
+                            <div class="part-item grid grid-cols-1 gap-y-4 gap-x-4 sm:grid-cols-12 border-b pb-4 last:border-b-0 last:pb-0">
+                                <input type="hidden" name="part-id" value="{{ part.id }}">
+                                <div class="sm:col-span-5">
+                                    <label for="part-name-{{ forloop.counter0 }}" class="block text-sm font-medium text-gray-700">Part/Service Name</label>
+                                    <div class="mt-1">
+                                        <input type="text" name="part-name" id="part-name-{{ forloop.counter0 }}" value="{{ part.part_name }}" required class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-2">
+                                    <label for="quantity-{{ forloop.counter0 }}" class="block text-sm font-medium text-gray-700">Quantity</label>
+                                    <div class="mt-1">
+                                        <input type="number" name="quantity" id="quantity-{{ forloop.counter0 }}" value="{{ part.quantity }}" min="1" required class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="price-{{ forloop.counter0 }}" class="block text-sm font-medium text-gray-700">Price (₹)</label>
+                                    <div class="mt-1">
+                                        <input type="number" name="price" id="price-{{ forloop.counter0 }}" value="{{ part.price|floatformat:2 }}" min="0" step="0.01" required class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-2 flex items-end">
+                                    <button type="button" class="w-full remove-part-btn inline-flex items-center justify-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="mt-4">
+                            <button type="button" id="add-part-btn" class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                                <i class="fas fa-plus mr-2"></i>
+                                Add Part/Service
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Total Amount -->
+                    <div class="flex justify-end">
+                        <div class="bg-gray-200 px-4 py-2 font-semibold text-gray-900 rounded">
+                            Total Amount: <span id="total-amount">₹{{ total_amount|floatformat:2 }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-end">
+                        <button type="submit" class="w-full sm:w-auto inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const partsContainer = document.getElementById('parts-container');
+            const addPartBtn = document.getElementById('add-part-btn');
+            const form = document.getElementById('edit-service-form');
+            const totalAmountSpan = document.getElementById('total-amount');
+
+            // Function to calculate and update total amount
+            function updateTotalAmount() {
+                let total = 0;
+                partsContainer.querySelectorAll('.part-item').forEach(item => {
+                    const quantityInput = item.querySelector('input[name="quantity"]');
+                    const priceInput = item.querySelector('input[name="price"]');
+                    const quantity = parseInt(quantityInput.value) || 0;
+                    const price = parseFloat(priceInput.value) || 0;
+                    total += quantity * price;
+                });
+                totalAmountSpan.textContent = '₹' + total.toFixed(2);
+            }
+
+            // Add event listeners for quantity and price changes
+            partsContainer.addEventListener('input', function(event) {
+                if (event.target.matches('input[name="quantity"]') || event.target.matches('input[name="price"]')) {
+                    updateTotalAmount();
+                }
+            });
+
+            // Function to add a new part item
+            function addPartItem(part = {}) {
+                const partItem = document.createElement('div');
+                partItem.classList.add('part-item', 'grid', 'grid-cols-1', 'gap-y-4', 'gap-x-4', 'sm:grid-cols-12', 'border-b', 'pb-4', 'last:border-b-0', 'last:pb-0');
+                partItem.innerHTML = `
+                    <input type="hidden" name="part-id" value="${part.id || ''}">
+                    <div class="sm:col-span-5">
+                        <label class="block text-sm font-medium text-gray-700">Part/Service Name</label>
+                        <div class="mt-1">
+                            <input type="text" name="part-name" value="${part.part_name || ''}" required class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700">Quantity</label>
+                        <div class="mt-1">
+                            <input type="number" name="quantity" value="${part.quantity || 1}" min="1" required class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                        </div>
+                    </div>
+                    <div class="sm:col-span-3">
+                        <label class="block text-sm font-medium text-gray-700">Price (₹)</label>
+                        <div class="mt-1">
+                            <input type="number" name="price" value="${part.price ? part.price.toFixed(2) : (0).toFixed(2)}" min="0" step="0.01" required class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                        </div>
+                    </div>
+                    <div class="sm:col-span-2 flex items-end">
+                         <button type="button" class="w-full remove-part-btn inline-flex items-center justify-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                partsContainer.appendChild(partItem);
+                 updateTotalAmount(); // Update total when a new part is added
+            }
+
+            // Event listener for adding a part
+            addPartBtn.addEventListener('click', function() {
+                addPartItem();
+            });
+
+            // Event listener for removing a part using event delegation
+            partsContainer.addEventListener('click', function(event) {
+                if (event.target.closest('.remove-part-btn')) {
+                    event.target.closest('.part-item').remove();
+                    updateTotalAmount(); // Update total when a part is removed
+                }
+            });
+
+            // Handle form submission
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const customerId = document.getElementById('customer-id').value;
+                const customerData = {
+                    name: document.getElementById('customer-name').value,
+                    phone_number: document.getElementById('phone-number').value,
+                    vehicle_number: document.getElementById('vehicle-number').value,
+                    vehicle_model: document.getElementById('vehicle-model').value,
+                };
+
+                const partsData = [];
+                partsContainer.querySelectorAll('.part-item').forEach(item => {
+                    const partId = item.querySelector('input[name="part-id"]').value;
+                    partsData.push({
+                        id: partId ? parseInt(partId) : null,
+                        part_name: item.querySelector('input[name="part-name"]').value,
+                        quantity: parseInt(item.querySelector('input[name="quantity"]').value) || 0,
+                        price: parseFloat(item.querySelector('input[name="price"]').value) || 0,
+                    });
+                });
+
+                fetch(`/service/bill/${customerId}/edit/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken') // Function to get CSRF token
+                    },
+                    body: JSON.stringify({
+                        customer: customerData,
+                        parts: partsData
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Service bill updated successfully!');
+                        // Redirect to the updated bill view or service list
+                         window.location.href = `/service/bill/${data.customer_id}/`;
+                    } else {
+                        alert('Error updating service bill: ' + data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('An error occurred while updating the service bill.');
+                });
+            });
+
+            // Helper function to get CSRF token (required for POST requests in Django)
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        });
+    </script>
+</body>
+</html> 
