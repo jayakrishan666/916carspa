@@ -12,6 +12,22 @@
             display: none;
         }
     }
+    .whatsapp-share {
+        background-color: #25D366;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .whatsapp-share:hover {
+        background-color: #128C7E;
+    }
 </style>
 {% endblock %}
 
@@ -26,7 +42,12 @@
             <i class="fas fa-print"></i>
             Print Bill
         </button>
+        <button onclick="shareViaWhatsApp()" class="whatsapp-share">
+            <i class="fab fa-whatsapp"></i>
+            Share via WhatsApp
+        </button>
     </div>
+    
 
     <div class="border border-gray-200 rounded-lg p-6 max-w-4xl w-full mx-auto">
         <header class="text-center mb-4">
@@ -90,4 +111,31 @@
         </footer>
     </div>
 </div>
+{% endblock %} 
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+function shareViaWhatsApp() {
+    // Get the customer's phone number
+    const phoneNumber = '{{ customer.phone_number }}';
+    // Remove any spaces or special characters
+    const cleanPhone = phoneNumber.replace(/\D/g, '');
+    // Add country code if not present
+    const whatsappNumber = cleanPhone.startsWith('91') ? cleanPhone : '91' + cleanPhone;
+    
+    // Create parts list
+    let partsList = '';
+    {% for part in customer.service_parts.all %}
+    partsList += `• {{ part.part_name }} - Qty: {{ part.quantity }} - ₹{{ part.price }}\n`;
+    {% endfor %}
+    
+    // Create WhatsApp share URL with a message
+    const message = `Hello {{ customer.name }},\n\nHere's your service bill from 916 CAR SPA:\n\nVehicle: {{ customer.vehicle_number }}\nModel: {{ customer.vehicle_model }}\n\nParts & Services:\n${partsList}\nTotal Amount: ₹{{ total_amount }}\n\nThank you for choosing our service!`;
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+    
+    // Open WhatsApp in new tab
+    window.open(whatsappUrl, '_blank');
+}
+</script>
 {% endblock %} 
